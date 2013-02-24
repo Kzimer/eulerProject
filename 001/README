@@ -5,3 +5,6 @@ Find the sum of all the multiples of 3 or 5 below 1000.
 
 SOLUTION
 233168
+
+EXECUTION TIME
+001.py 0m19.249s for 1000 executions on average
