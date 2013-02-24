@@ -4,7 +4,7 @@ the product of two 2-digit numbers is 9009 = 91*99.
 Find the largest palindrome made from the product of two 3-digit numbers.
 
 SOLUTION
-
+906609
 
 EXECUTION TIME
-004.py 0m23.830s for 1000 executions on average
+004.py  0m23.830s for 1000 executions on average

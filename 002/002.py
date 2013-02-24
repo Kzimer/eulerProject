@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 r = 0
 f0 = 1
 f1 = 2
