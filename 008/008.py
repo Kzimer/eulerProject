@@ -19,6 +19,6 @@ while (i + 5 <= 1000):
         r = p
     i += 1
 
-#print r
+print r
 
 
