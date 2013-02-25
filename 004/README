@@ -7,4 +7,4 @@ SOLUTION
 906609
 
 EXECUTION TIME
-004.py  0m23.830s for 1000 executions on average
+004.py  0m0.023s on average (0m23.830s for 1000 executions on average, 3 tests)

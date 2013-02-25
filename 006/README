@@ -12,4 +12,4 @@ SOLUTION
 25164150
 
 EXECUTION TIME
-006.py  0m16.378s for 1000 executions on average
+006.py  0m0.016s on average (0m16.378s for 1000 executions on average, 3 tests)

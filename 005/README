@@ -8,4 +8,4 @@ SOLUTION
 232792560
 
 EXECUTION TIME
-005.py  0m16.809s for 1000 executions on average
+005.py  0m0.016s on average (0m16.809s for 1000 executions on average, 3 tests)
