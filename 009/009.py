@@ -15,9 +15,9 @@ a = 3
 
 while (a < 333):
     b = a + 1
-    while(b < 334):
+    while(b < 500):
         if (sumTriplet(a, b) == 1000):
-            #print a * b * (sumTriplet(a, b) - a - b)
+            print a * b * (sumTriplet(a, b) - a - b)
             break
         b += 1
     a += 1
