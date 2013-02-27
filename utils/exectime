@@ -1,0 +1,87 @@
+#!/bin/bash
+
+#*******************************************#
+#                 exectime                  #
+#       written by github.com/Kzimer        #
+#             February 26, 2013             #
+#                                           #
+#   Evaluate the average execution time     #
+#          of scripts and programs.         #
+#*******************************************#
+
+
+# ========================================= #
+# difftime ()                               #
+# Computes a command's execution time once. #
+# Parameters: the command you want to test, #
+#             with all its own parameters.  #
+# Returns: nothing. The result is echoed to #
+#          stdout                           #
+# ========================================= #
+
+difftime ()
+{
+    START=$(date +%s.%N)    # time signature just before the execution
+    $* 2>&1 1>/dev/null     # discard all outputs of the command
+    END=$(date +%s.%N)      # time signature just after the execution
+    DIFF=$(echo "$END - $START" | bc)
+    echo $DIFF
+}
+
+
+# Help string #
+# ----------- #
+H="Usage: ./exectime [-n numberOfTest] \
+   [-s timer] 'command [arg...]'"
+
+# Default values #
+# -------------- #
+N=1000     # 1000 executions
+
+
+# Parsing the arguments #
+R=0     # counts the parsed arguments
+while getopts ":n:s:h" opt; do
+  case $opt in
+    n) 
+      N=$OPTARG
+      R=$(($R + 2))
+      ;;
+    \?) # includes -h
+      echo $H >&2
+      exit 1
+      ;;
+    :)
+      echo $H >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $R # get rid of parsed arguments
+
+if [ $# = 1 ] # there has to remain one argument, 'command [args...]'
+then
+    sum='0.'
+    min='10000000.'
+    max='0.'
+    for i in `seq $N`
+        do  tmp=`difftime $1`
+            sum=$(echo "$sum + $tmp" | bc)
+            if [[ $(echo "$max < $tmp" | bc) ]]
+            then
+                max=$tmp
+            fi
+            if [[ $(echo "$min > $tmp"|bc) ]]
+            then
+                min=$tmp
+            fi
+        done
+    avg=$(echo "scale=9; $sum / $N;" | bc -l)
+    echo "avg $avg min $min max $max sum $sum iter $N"
+    exit 0
+
+else
+  echo $H >&2
+  exit 1
+fi
