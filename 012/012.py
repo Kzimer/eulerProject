@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 from math import sqrt
 def divisors(n):
     sn = int(sqrt(n)) + 1

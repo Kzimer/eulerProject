@@ -1,0 +1,9 @@
+PROBLEM
+Work out the first ten digits of the sum of the following one-hundred 50-digit
+numbers [in the file ./numbers]
+
+SOLUTION
+5537376230
+
+EXECUTION TIME
+010.py  0m0.017s on average (0m17.076s for 1000 executions on average, 3 tests)

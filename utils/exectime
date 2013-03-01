@@ -18,7 +18,6 @@
 # Returns: nothing. The result is echoed to #
 #          stdout                           #
 # ========================================= #
-
 difftime ()
 {
     START=$(date +%s.%N)    # time signature just before the execution
@@ -29,59 +28,37 @@ difftime ()
 }
 
 
-# Help string #
-# ----------- #
-H="Usage: ./exectime [-n numberOfTest] \
-   [-s timer] 'command [arg...]'"
-
-# Default values #
-# -------------- #
-N=1000     # 1000 executions
-
-
-# Parsing the arguments #
-R=0     # counts the parsed arguments
-while getopts ":n:s:h" opt; do
-  case $opt in
-    n) 
-      N=$OPTARG
-      R=$(($R + 2))
-      ;;
-    \?) # includes -h
-      echo $H >&2
-      exit 1
-      ;;
-    :)
-      echo $H >&2
-      exit 1
-      ;;
-  esac
-done
-
-shift $R # get rid of parsed arguments
-
-if [ $# = 1 ] # there has to remain one argument, 'command [args...]'
+if [ $# -gt 2 ] # there has to be at least two "full" parameters
 then
+    N=$1
+    shift
+    CMD=""
+    while [ $# -gt 0 ]
+        do  CMD="$CMD $1"
+            shift
+        done
     sum='0.'
     min='10000000.'
     max='0.'
     for i in `seq $N`
-        do  tmp=`difftime $1`
+        do  tmp=`difftime $CMD`
             sum=$(echo "$sum + $tmp" | bc)
-            if [[ $(echo "$max < $tmp" | bc) ]]
+            if [[ $(echo "$max < $tmp" | bc) -eq 1 ]]
             then
                 max=$tmp
             fi
-            if [[ $(echo "$min > $tmp"|bc) ]]
+            if [[ $(echo "$min > $tmp" | bc) -eq 1 ]]
             then
                 min=$tmp
             fi
         done
-    avg=$(echo "scale=9; $sum / $N;" | bc -l)
-    echo "avg $avg min $min max $max sum $sum iter $N"
+    avg=$(echo "scale=1; 1000. * $sum / $N;" | bc -l)
+    min=$(echo "scale=1; $min / 0.001;" | bc -l)
+    max=$(echo "scale=1;  $max / 0.001;" | bc -l)
+    echo "min/avg/max = $min/$avg/$max ms"
     exit 0
 
 else
-  echo $H >&2
-  exit 1
+    echo "Usage: ./exectime numberOfTest command [arg...]" >&2
+    exit 1
 fi
